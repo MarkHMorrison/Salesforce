@@ -1,4 +1,4 @@
-<aura:component controller="Lookup"> 
+<aura:component controller="LightningLookupController"> 
      <aura:attribute Name="selItem" type="object" access="public" description="This attribute can be used by parent component to read selected record"/>  
      <aura:attribute Name="server_result" type="object[]" access="private" /> 
      
