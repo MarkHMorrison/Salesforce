@@ -39,3 +39,9 @@
 .THIS .slds-has-inline-listbox{
   margin-bottom: 24px;
 }
+.THIS .slds-combobox{
+  width: 95%;
+}
+.THIS .slds-pill{
+  min-height: 1.9rem;
+}

@@ -26,7 +26,7 @@
         </label>
         <div class="slds-combobox_container slds-has-inline-listbox">
           <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open" 
-            aria-expanded="true" aria-haspopup="listbox" role="combobox" style="width:95%">
+            aria-expanded="true" aria-haspopup="listbox" role="combobox">
             <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_left">
               <aura:if isTrue="{!empty(v.selectedItem)}"> 
                 <lightning:icon class="slds-icon slds-input__icon slds-input__icon_left" iconName="utility:search"
@@ -37,9 +37,9 @@
                   placeholder="{!v.placeholder}" onkeyup="{!c.serverCall}" />
                 <aura:set attribute="else"> 
                   <span class="slds-pill slds-pill_link fullWidth"> 
-                    <a href="javascript:void(0);" class="slds-pill__action slds-p-left_x-small" title="{#v.selectedItem.text}">
-                      <lightning:icon iconName="{#v.lookupIcon}" size="x-small"/>
-                      <span class="slds-pill__label slds-p-left_x-small">{#v.selectedItem.text}</span>
+                    <a href="javascript:void(0);" class="slds-p-left_x-small" title="{#v.selectedItem.text}">
+                      <lightning:icon iconName="{#v.lookupIcon}" size="small"/>
+                      <span class="slds-pill__label slds-p-left_small">{#v.selectedItem.text}</span>
                     </a>
                     <button onclick="{!c.clearSelection}" class="slds-button slds-button_icon slds-button_icon slds-pill__remove" title="Remove">
                       <lightning:icon iconName="utility:close" size="small" alternativeText="Press delete or backspace to remove"/>
