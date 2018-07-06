@@ -1,0 +1,15 @@
+<design:component>
+  <design:attribute name="objectName"    label="i *Object Name" />
+  <design:attribute name="displayField"  label="i *Field to Display" />
+  <design:attribute name="valueField"    label="i *Field to Return" />
+  <design:attribute name="searchField"   label="i *Field to Search" />
+  <design:attribute name="filterField"   label="i Filter Field" />
+  <design:attribute name="filterValue"   label="i Filter Value" /> 
+  <design:attribute name="whereClause"   label="i WHERE Clause" />
+  <design:attribute name="searchLimit"   label="i Record Limit" />
+  <design:attribute name="label"         label="i Label" />  
+  <design:attribute name="required"      label="i Required" />  
+  <design:attribute name="lookupIcon"    label="i Icon eg- standard:opportunity" />
+  <design:attribute name="placeholder"   label="i Placeholder" />
+  <design:attribute name="selectedValue" label="o *Output Variable" />  
+</design:component>
