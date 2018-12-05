@@ -84,14 +84,14 @@ global class TransactionBatchService implements Database.Batchable<sObject>, Dat
   }
 
   private void sendMessage(String subject, String body) {
-    Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-    mail.setToAddresses(new String[] { 'markhmorrison@gmail.com' });
-    mail.setSubject(subject);
-    mail.setPlainTextBody(body);
+    Messaging.SingleEmailMessage emailMessage = new Messaging.SingleEmailMessage();
+    emailMessage.setToAddresses(new String[] { 'markhmorrison@gmail.com' });
+    emailMessage.setSubject(subject);
+    emailMessage.setPlainTextBody(body);
     if (Test.isRunningTest()) {
       System.debug(subject + ': ' + body);
     } else {
-      Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+      Messaging.sendEmail(new Messaging.SingleEmailMessage[] { emailMessage });
     }
   }
 }
