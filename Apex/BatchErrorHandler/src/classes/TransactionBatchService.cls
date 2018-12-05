@@ -83,13 +83,13 @@ global class TransactionBatchService implements Database.Batchable<sObject>, Dat
     sendMessage(UserInfo.getOrganizationName() + ' Transaction Batch Service ' + jobResult.Status, mailMessage);
   }
 
-  private void sendMessage(String subject, String message) {
+  private void sendMessage(String subject, String body) {
     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
     mail.setToAddresses(new String[] { 'markhmorrison@gmail.com' });
     mail.setSubject(subject);
-    mail.setPlainTextBody(message);
+    mail.setPlainTextBody(body);
     if (Test.isRunningTest()) {
-      System.debug('Transaction Batch Message: ' + message);
+      System.debug(subject + ': ' + body);
     } else {
       Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
     }
