@@ -28,33 +28,31 @@ global class TransactionBatchService implements Database.Batchable<sObject>, Dat
   }
 
   global void execute(Database.BatchableContext bc, List<causeview__Gift__c> scope) {
-    if (scope.size() > 0) {
-      // Set all Transaction Id's from the scope
-      Set<Id> transactionIds = new Set<Id>(new Map<Id, causeview__Gift__c>(scope).keySet());
-      // Get all Receipts
-      List<causeview__Receipt__c> receipts = [
-        SELECT Id 
-        FROM causeview__Receipt__c 
-        WHERE causeview__Gift__c IN :transactionIds
-          AND causeview__Status__c != 'Issued'
-          AND causeview__Receipt_Email_Address__c != null
-          AND causeview__Receipt_Type__c != 'Consolidated'
-      ];
-      if (!receipts.isEmpty()) {
-        List<Database.SaveResult> saveResults = Database.update(receipts,false);
-        Integer recordId = 0;
-        for (Database.SaveResult saveResult : saveResults) {
-          if (!saveResult.isSuccess()) {
-            errorMessages += '\nReceipt Record Id: ' + receipts[recordId].Id;
-            for (Database.Error error: saveResult.getErrors()) {
-              errorMessages += '\n - ' + error.getMessage();
-            }
-            recordsNotProcessed++;
+    // Set all Transaction Id's from the scope
+    Set<Id> transactionIds = new Set<Id>(new Map<Id, causeview__Gift__c>(scope).keySet());
+    // Get all Receipts
+    List<causeview__Receipt__c> receipts = [
+      SELECT Id 
+      FROM causeview__Receipt__c 
+      WHERE causeview__Gift__c IN :transactionIds
+        AND causeview__Status__c != 'Issued'
+        AND causeview__Receipt_Email_Address__c != null
+        AND causeview__Receipt_Type__c != 'Consolidated'
+    ];
+    if (!receipts.isEmpty()) {
+      List<Database.SaveResult> saveResults = Database.update(receipts,false);
+      Integer recordId = 0;
+      for (Database.SaveResult saveResult : saveResults) {
+        if (!saveResult.isSuccess()) {
+          errorMessages += '\nReceipt Record Id: ' + receipts[recordId].Id;
+          for (Database.Error error: saveResult.getErrors()) {
+            errorMessages += '\n - ' + error.getMessage();
           }
-          recordsProcessed++;
-          recordId++;
-        }    
-      }
+          recordsNotProcessed++;
+        }
+        recordsProcessed++;
+        recordId++;
+      }    
     }
   }
 
