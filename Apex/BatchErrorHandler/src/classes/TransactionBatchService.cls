@@ -59,23 +59,17 @@ global class TransactionBatchService implements Database.Batchable<sObject>, Dat
   }
 
   global void finish(Database.BatchableContext bc) {
-    String mailMessage;
     AsyncApexJob jobResult = [
       SELECT Id, Status, ExtendedStatus, NumberOfErrors, JobItemsProcessed, TotalJobItems
       FROM AsyncApexJob
       WHERE Id = :bc.getJobId()
     ];
 
-    if (Test.isRunningTest()) {
-      System.debug('Testing Result: ' + jobResult);
-    }
-    mailMessage = 'Transaction Batch Service status: ' + jobResult.Status;
+    String mailMessage = 'Transaction Batch Service status: ' + jobResult.Status;
     mailMessage += '\n\n - Total Job Items: ' + jobResult.TotalJobItems;
     mailMessage += '\n - Jobs Items Processed: ' + jobResult.JobItemsProcessed;
     mailMessage += '\n - Number of errors: ' + jobResult.NumberOfErrors;
-    if (jobResult.ExtendedStatus != null) {
-      mailMessage += '\n\n' + jobResult.ExtendedStatus;
-    }
+    if (jobResult.ExtendedStatus != null) mailMessage += '\n\n' + jobResult.ExtendedStatus;
     mailMessage += '\n\nRecord Counts:';
     mailMessage += '\n\n - Total: ' + recordsProcessed;
     mailMessage += '\n - Errors: ' + recordsNotProcessed;
@@ -88,10 +82,7 @@ global class TransactionBatchService implements Database.Batchable<sObject>, Dat
     emailMessage.setToAddresses(new String[] { 'markhmorrison@gmail.com' });
     emailMessage.setSubject(subject);
     emailMessage.setPlainTextBody(body);
-    if (Test.isRunningTest()) {
-      System.debug(subject + ': ' + body);
-    } else {
-      Messaging.sendEmail(new Messaging.SingleEmailMessage[] { emailMessage });
-    }
+    if (Test.isRunningTest()) System.debug(subject + ': ' + body);
+    else Messaging.sendEmail(new Messaging.SingleEmailMessage[] { emailMessage });
   }
 }
