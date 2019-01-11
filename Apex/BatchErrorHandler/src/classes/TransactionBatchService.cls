@@ -63,24 +63,21 @@ global class TransactionBatchService implements Database.Batchable<sObject>, Dat
       WHERE Id = :bc.getJobId()
     ];
 
-    String mailMessage = 'Transaction Batch Service status: ' + jobResult.Status;
-    mailMessage += '\n\n - Total Job Items: ' + jobResult.TotalJobItems;
-    mailMessage += '\n - Jobs Items Processed: ' + jobResult.JobItemsProcessed;
-    mailMessage += '\n - Number of errors: ' + jobResult.NumberOfErrors;
+    String mailMessage = '\n\nJob Items (Batches):';
+    mailMessage += '\n - Total: ' + jobResult.TotalJobItems;
+    mailMessage += '\n - Processed: ' + jobResult.JobItemsProcessed;
+    mailMessage += '\n - Errors: ' + jobResult.NumberOfErrors;
     if (jobResult.ExtendedStatus != null) mailMessage += '\n\n' + jobResult.ExtendedStatus;
     mailMessage += '\n\nRecord Counts:';
-    mailMessage += '\n\n - Total: ' + recordsProcessed;
+    mailMessage += '\n - Total: ' + recordsProcessed;
     mailMessage += '\n - Errors: ' + recordsNotProcessed;
     mailMessage += '\n' + errorMessages;
-    sendMessage(UserInfo.getOrganizationName() + ' Transaction Batch Service ' + jobResult.Status, mailMessage);
-  }
-
-  private void sendMessage(String subject, String body) {
+ 
     Messaging.SingleEmailMessage emailMessage = new Messaging.SingleEmailMessage();
     emailMessage.setToAddresses(new String[] { 'markhmorrison@gmail.com' });
-    emailMessage.setSubject(subject);
-    emailMessage.setPlainTextBody(body);
-    if (Test.isRunningTest()) System.debug(subject + ': ' + body);
+    emailMessage.setSubject(UserInfo.getOrganizationName() + ': Transaction Batch Service: ' + jobResult.Status);
+    emailMessage.setPlainTextBody(emailMessage.getSubject() + mailMessage);
+    if (Test.isRunningTest()) System.debug(emailMessage.getPlainTextBody());
     else Messaging.sendEmail(new Messaging.SingleEmailMessage[] { emailMessage });
   }
 }
