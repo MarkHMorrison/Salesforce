@@ -67,7 +67,7 @@ global class TransactionBatchService implements Database.Batchable<sObject>, Dat
     mailMessage += '\n - Total: ' + jobResult.TotalJobItems;
     mailMessage += '\n - Processed: ' + jobResult.JobItemsProcessed;
     mailMessage += '\n - Errors: ' + jobResult.NumberOfErrors;
-    if (jobResult.ExtendedStatus != null) mailMessage += '\n\n' + jobResult.ExtendedStatus;
+    if(jobResult.ExtendedStatus != null) mailMessage += '\n\n' + jobResult.ExtendedStatus;
     mailMessage += '\n\nRecord Counts:';
     mailMessage += '\n - Total: ' + recordsProcessed;
     mailMessage += '\n - Errors: ' + recordsNotProcessed;
@@ -77,7 +77,7 @@ global class TransactionBatchService implements Database.Batchable<sObject>, Dat
     emailMessage.setToAddresses(new String[] { 'markhmorrison@gmail.com' });
     emailMessage.setSubject(UserInfo.getOrganizationName() + ': Transaction Batch Service: ' + jobResult.Status);
     emailMessage.setPlainTextBody(emailMessage.getSubject() + mailMessage);
-    if (Test.isRunningTest()) System.debug(emailMessage.getPlainTextBody());
+    if(Test.isRunningTest()) System.debug(emailMessage.getPlainTextBody());
     else Messaging.sendEmail(new Messaging.SingleEmailMessage[] { emailMessage });
   }
 }
