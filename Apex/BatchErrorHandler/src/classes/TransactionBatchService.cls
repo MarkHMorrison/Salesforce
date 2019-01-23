@@ -39,15 +39,13 @@ global class TransactionBatchService implements Database.Batchable<sObject>, Dat
         AND causeview__Receipt_Email_Address__c != null
         AND causeview__Receipt_Type__c != 'Consolidated'
     ];
-    if (!receipts.isEmpty()) {
+    if(!receipts.isEmpty()) {
       List<Database.SaveResult> saveResults = Database.update(receipts,false);
       Integer recordId = 0;
-      for (Database.SaveResult saveResult : saveResults) {
-        if (!saveResult.isSuccess()) {
+      for(Database.SaveResult saveResult : saveResults) {
+        if(!saveResult.isSuccess()) {
           errorMessages += '\nReceipt Record Id: ' + receipts[recordId].Id;
-          for (Database.Error error: saveResult.getErrors()) {
-            errorMessages += '\n - ' + error.getMessage();
-          }
+          for(Database.Error error: saveResult.getErrors()) errorMessages += '\n - ' + error.getMessage();
           recordsNotProcessed++;
         }
         recordsProcessed++;
@@ -75,9 +73,9 @@ global class TransactionBatchService implements Database.Batchable<sObject>, Dat
  
     Messaging.SingleEmailMessage emailMessage = new Messaging.SingleEmailMessage();
     emailMessage.setToAddresses(new String[] { 'markhmorrison@gmail.com' });
-    emailMessage.setSubject(UserInfo.getOrganizationName() + ': Transaction Batch Service: ' + jobResult.Status);
+    emailMessage.setSubject(UserInfo.getOrganizationName() + ': TransactionBatchService: ' + jobResult.Status);
     emailMessage.setPlainTextBody(emailMessage.getSubject() + mailMessage);
-    if(Test.isRunningTest()) System.debug(emailMessage.getPlainTextBody());
-    else Messaging.sendEmail(new Messaging.SingleEmailMessage[] { emailMessage });
+    if(!Test.isRunningTest()) Messaging.sendEmail(new Messaging.SingleEmailMessage[] { emailMessage });
+    else System.debug(emailMessage.getPlainTextBody());
   }
 }
