@@ -2,10 +2,10 @@ global class TransactionBatchService implements Database.Batchable<sObject>, Dat
   global Integer recordsProcessed = 0;
   global Integer recordsNotProcessed = 0;
   global String errorMessages = '';
-  String query;
+  String batchQuery;
 
   public TransactionBatchService() {
-    query = 'SELECT Id ' +
+    batchQuery = 'SELECT Id ' +
       'FROM causeview__Gift__c ' +
       'WHERE PaymentTypeCreditACH__c > 0 ' +
         'AND causeview__Amount__c > 0 ' +
@@ -21,10 +21,12 @@ global class TransactionBatchService implements Database.Batchable<sObject>, Dat
           'SELECT causeview__Donation__c FROM causeview__Payment__c ' +
           'WHERE Email_Receipts_Sent__c = null' +
         ')';
+    System.debug('constructor batchQuery: ' + batchQuery);
   }
 
   global Database.QueryLocator start(Database.BatchableContext bc) {
-    return Database.getQueryLocator(query);
+    System.debug('start batchQuery: ' + batchQuery);
+    return Database.getQueryLocator(batchQuery);
   }
 
   global void execute(Database.BatchableContext bc, List<causeview__Gift__c> scope) {
