@@ -29,11 +29,11 @@ global class TransactionBatchService implements Database.Batchable<sObject>, Dat
     return Database.getQueryLocator(batchQuery);
   }
 
-  global void execute(Database.BatchableContext bc, List<causeview__Gift__c> scope) {
+  global void execute(Database.BatchableContext bc, causeview__Gift__c[] scope) {
     // Set all Transaction Id's from the scope
     Set<Id> transactionIds = new Set<Id>(new Map<Id, causeview__Gift__c>(scope).keySet());
     // Get all Receipts
-    List<causeview__Receipt__c> receipts = [
+    causeview__Receipt__c[] receipts = [
       SELECT Id 
       FROM causeview__Receipt__c 
       WHERE causeview__Gift__c IN :transactionIds
@@ -42,7 +42,7 @@ global class TransactionBatchService implements Database.Batchable<sObject>, Dat
         AND causeview__Receipt_Type__c != 'Consolidated'
     ];
     if(!receipts.isEmpty()) {
-      List<Database.SaveResult> saveResults = Database.update(receipts,false);
+      Database.SaveResult[] saveResults = Database.update(receipts,false);
       Integer recordId = 0;
       for(Database.SaveResult saveResult : saveResults) {
         if(!saveResult.isSuccess()) {
