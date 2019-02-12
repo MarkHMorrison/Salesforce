@@ -57,17 +57,17 @@ global class TransactionBatchService implements Database.Batchable<sObject>, Dat
   }
 
   global void finish(Database.BatchableContext bc) {
-    AsyncApexJob jobResult = [
+    AsyncApexJob apexJob = [
       SELECT Id, Status, ExtendedStatus, NumberOfErrors, JobItemsProcessed, TotalJobItems
       FROM AsyncApexJob
       WHERE Id = :bc.getJobId()
     ];
 
     String emailBody = '\n\nJob Items (Batches):';
-    emailBody += '\n - Total: ' + jobResult.TotalJobItems;
-    emailBody += '\n - Processed: ' + jobResult.JobItemsProcessed;
-    emailBody += '\n - Errors: ' + jobResult.NumberOfErrors;
-    if(jobResult.ExtendedStatus != null) emailBody += '\n\n' + jobResult.ExtendedStatus;
+    emailBody += '\n - Total: ' + apexJob.TotalJobItems;
+    emailBody += '\n - Processed: ' + apexJob.JobItemsProcessed;
+    emailBody += '\n - Errors: ' + apexJob.NumberOfErrors;
+    if(apexJob.ExtendedStatus != null) emailBody += '\n\n' + apexJob.ExtendedStatus;
     emailBody += '\n\nRecord Counts:';
     emailBody += '\n - Total: ' + recordsProcessed;
     emailBody += '\n - Errors: ' + recordsNotProcessed;
