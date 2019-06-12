@@ -62,8 +62,10 @@ FROM Account
 
 -- Querying a Child Object Using Sub Queries
 SELECT Id, Name, Owner.Name
-  (SELECT Id, Merchandise__r.Name 
-   FROM Line_Items__r)
+  (
+    SELECT Id, Merchandise__r.Name 
+    FROM Line_Items__r
+  )
 FROM Invoice__c
 
 -- Id field Semi-Join
