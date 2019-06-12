@@ -77,9 +77,9 @@ WHERE Id IN
 -- Reference Field Anti-Join
 SELECT Id FROM Opportunity
 WHERE AccountId NOT IN 
-	( 
-		SELECT AccountId FROM Contact
-		WHERE LeadSource = ‘Web’
-	)
+ ( 
+   SELECT AccountId FROM Contact
+   WHERE LeadSource = ‘Web’
+ )
 
 
