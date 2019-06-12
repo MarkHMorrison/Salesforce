@@ -1,7 +1,7 @@
 /**
  * @description Base data factory will create any object 
  * @author Daniel Hoechst https://github.com/dhoechst/Salesforce-Test-Factory/blob/master/src/classes/Data.cls-meta.xml
- * @author Mark H. Morrison
+ * @author Mark H. Morrison added option for sObjects with autonumber
  * @date Mon Jun 18 2018
  */
 @isTest
@@ -157,21 +157,21 @@ public class TestDataFactory {
 			};
 		}
 	}
-  // // The Data will pre-fill all the fields we typically need
-  // Account a = (Account)Data.createSObject(new Account());
+  // // The TestDataFactory will pre-fill all the fields we typically need
+  // Account a = (Account)TestDataFactory.createSObject(new Account());
   // insert a;
 
   // // You can also set values to be used. Any values set in the constructor will override the defaults
-  // Opportunity o = (Opportunity)Data.createSObject(new Opportunity(AccountId = a.Id));
+  // Opportunity o = (Opportunity)TestDataFactory.createSObject(new Opportunity(AccountId = a.Id));
 
   // // You can also specify a specific set of overrides for different scenarios
-  // Account a = (Account)Data.createSObject(new Account(), 'Data.AccountDefaults');
+  // Account a = (Account)TestDataFactory.createSObject(new Account(), 'TestDataFactory.AccountDefaults');
 
   // // Finally, get a bunch of records for testing bulk
-  // Account[] aList = (Account[])Data.createSObjectList(new Account(), 200);
+  // Account[] aList = (Account[])TestDataFactory.createSObjectList(new Account(), 200);
 
   // // You can optionally insert records as created like this:
   // // Note the final parameter of true.
-  // Account a = (Account) Data.createSObject(new Account(), true);
-  // Contact c = (Contact) Data.createSObject(new Contact(AccountID = a.Id), true);
+  // Account a = (Account)TestDataFactory.createSObject(new Account(), true);
+  // Contact c = (Contact)TestDataFactory.createSObject(new Contact(AccountID = a.Id), true);
 }
