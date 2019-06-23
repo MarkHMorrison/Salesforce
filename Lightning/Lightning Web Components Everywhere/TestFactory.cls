@@ -1,3 +1,9 @@
+/**
+ * @description Base data factory will create any object 
+ * @author Daniel Hoechst https://github.com/dhoechst/Salesforce-Test-Factory
+ * @author Mark H. Morrison
+ * @date Mon Jun 18 2018
+ */
 @isTest
 public class TestFactory {
 
