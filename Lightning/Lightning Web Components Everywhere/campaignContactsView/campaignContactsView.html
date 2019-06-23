@@ -1,0 +1,28 @@
+<template>
+  <lightning-card title={name} icon-name="action:call">
+    <div class="slds-card__body slds-card__body_inner">
+      <template if:true={contacts}>
+        Advisors to call: {contactLength}
+        <table>
+          <tr>
+            <th style="width:150px">Campaigns</th>
+            <th style="width:200px">Name</th>
+            <th style="width:200px">Divison</th>
+            <th style="width:200px">Account</th>
+          </tr>
+          <template for:each={contacts} for:item="contact">
+            <tr key={contact.Id}>
+              <td>{contact.CampaignName}</td>
+              <td><lightning-formatted-url value={contact.Link} label={contact.Name} class="slds-m-right_x-small" target="_blank"></lightning-formatted-url></td>
+              <td>{contact.Division}</td>
+              <td>{contact.Account}</td>
+            </tr>
+          </template>
+        </table>
+      </template>
+      <template if:true={error}>
+        {error}
+      </template>
+    </div>
+  </lightning-card>
+</template>
