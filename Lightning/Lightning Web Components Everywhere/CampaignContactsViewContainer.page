@@ -1,0 +1,20 @@
+<apex:page applyHtmlTag="false" applyBodyTag="false" showHeader="false" sidebar="false" >
+  <apex:includeLightning />
+
+  <div id="lightningContainer" />
+
+  <script type="text/javascript">
+    console.log('Initializing Lightning App');
+    $Lightning.use("c:CampaignContactsViewContainerApp", function() {
+      console.log('Initializing Lightning Component');
+      $Lightning.createComponent(
+        "c:campaignContactsView", 
+        {name : "Campaigns: Contacts to Call"},
+        "lightningContainer",
+        function(cmp) {
+          console.log('Component created!');
+        }
+      );
+    });
+  </script>
+</apex:page>
