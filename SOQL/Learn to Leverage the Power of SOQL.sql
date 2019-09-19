@@ -1,17 +1,17 @@
 -- Base
-SELECT Id, Name FROM Account
+SELECT Id, Name, Phone FROM Account
 
 -- WHERE
-SELECT Id, Name From Account
+SELECT Id, Name, Phone From Account
 WHERE Phone = null
 
 -- AND
-SELECT Id, Name From Account
+SELECT Id, Name, Phone, Type From Account
 WHERE Phone = null
   AND Type = ‘Prospect’
 
 -- OR
-SELECT Id, Name From Account
+SELECT Id, Name, Phone, Type, Industry, BillingState From Account
 WHERE Phone = null
   AND Type = 'Prospect'
   AND (Industry = 'Energy' OR BillingState = 'CA')
@@ -61,7 +61,7 @@ SELECT Id, Name,
 FROM Account
 
 -- Querying a Child Object Using Sub Queries
-SELECT Id, Name, Owner.Name
+SELECT Id, Name, Owner.Name,
   (
     SELECT Id, Merchandise__r.Name 
     FROM Line_Items__r
