@@ -13,8 +13,8 @@ WHERE Phone = null
 -- OR
 SELECT Id, Name From Account
 WHERE Phone = null
-  AND Type = ‘Prospect’
-  AND (Industry = ‘Energy’ OR BillingState = ‘CA’)
+  AND Type = 'Prospect'
+  AND (Industry = 'Energy' OR BillingState = 'CA')
 
 -- LIMIT
 SELECT Id, Name FROM Account
@@ -26,15 +26,15 @@ ORDER BY Name ASC
 
 -- IN ()
 SELECT Id, Name FROM Account
-WHERE BillingState IN (‘TN’,’GA’,’NC’)
+WHERE BillingState IN ('TN','GA','NC')
 
 -- NOT IN ()
 SELECT Id, Name FROM Account
-WHERE BillingState NOT IN (‘TN’,’GA’,’NC’)
+WHERE BillingState NOT IN ('TN','GA','NC')
 
 -- LIKE (% / _)
 SELECT Id, Name FROM Contact
-WHERE  Email LIKE ‘%@g_ail.com’
+WHERE  Email LIKE '%@g_ail.com'
 
 -- COUNT()
 SELECT COUNT() FROM Account
@@ -73,7 +73,7 @@ SELECT Id, Name FROM Account
 WHERE Id IN 
   ( 
     SELECT AccountId FROM Opportunity
-    WHERE StageName = ‘Closed Lost’
+    WHERE StageName = 'Closed Lost'
   )
 
 -- Reference Field Anti-Join
@@ -81,7 +81,5 @@ SELECT Id FROM Opportunity
 WHERE AccountId NOT IN 
  ( 
    SELECT AccountId FROM Contact
-   WHERE LeadSource = ‘Web’
+   WHERE LeadSource = 'Web'
  )
-
-
